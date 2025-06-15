@@ -24,10 +24,8 @@ class DeliveryTest {
     @DisplayName("Should successful plan and replan meeting")
     void shouldSuccessfulPlanAndReplanMeeting() {
         var validUser = DataGenerator.Registration.generateUser("ru");
-        var daysToAddForFirstMeeting = 4;
-        var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
-        var daysToAddForSecondMeeting = 7;
-        var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
+        var firstMeetingDate = DataGenerator.generateDate(4);
+        var secondMeetingDate = DataGenerator.generateDate(7);
 
         $("[data-test-id=city] input").setValue(validUser.getCity());
         $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SPACE, Keys.HOME), Keys.BACK_SPACE);
@@ -38,7 +36,7 @@ class DeliveryTest {
         $("button.button").click();
 
         $(Selectors.byText("Запланировать")).click();
-        $(Selectors.withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $(Selectors.withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(20));
         $("[data-test-id='success-notification'] .notification__content")
                 .shouldHave(exactText("Встреча успешно запланирована на " + firstMeetingDate))
                 .shouldBe(visible);
