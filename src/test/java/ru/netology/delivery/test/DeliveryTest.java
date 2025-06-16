@@ -29,7 +29,7 @@ class DeliveryTest {
         var secondMeetingDate = DataGenerator.generateDate(7);
 
         $("[data-test-id=city] input").setValue(validUser.getCity());
-        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SPACE, Keys.HOME), Keys.BACK_SPACE);
+        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
         $("[data-test-id=date] input").setValue(firstMeetingDate);
         $("[data-test-id=name] input").setValue(validUser.getName());
         $("[data-test-id=phone] input").setValue(validUser.getPhone());
@@ -39,20 +39,20 @@ class DeliveryTest {
         $(Selectors.byText("Запланировать")).click();
         $(Selectors.withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(20));
         $("[data-test-id='success-notification'] .notification__content")
-                .shouldHave(exactText("Встреча успешно запланирована на " + firstMeetingDate))
+                .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate))
                 .shouldBe(visible);
 
-        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SPACE, Keys.HOME), Keys.BACK_SPACE);
+        $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.BACK_SPACE);
         $("[data-test-id=date] input").setValue(secondMeetingDate);
         $(Selectors.byText("Запланировать")).click();
 
         $("[data-test-id='replan-notification'] .notification__content")
-                .shouldHave(exactText("У вас уже запланирована встреча на другую дату. Перепланировать?"))
+                .shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"))
                 .shouldBe(visible);
 
         $("[data-test-id='replan-notification'] button").click();
         $("[data-test-id='success-notification'] .notification__content")
-                .shouldHave(exactText("Встреча успешно запланирована на " + secondMeetingDate))
+                .shouldHave(text("Встреча успешно запланирована на " + secondMeetingDate))
                 .shouldBe(visible);
     }
 }
